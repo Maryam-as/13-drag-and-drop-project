@@ -1,4 +1,52 @@
 /**
+ * Project State Management
+ *
+ * This class is responsible for managing all project data.
+ * It follows the Singleton pattern to ensure there is only one instance
+ * of ProjectState across the entire application.
+ */
+class ProjectState {
+  // Array to hold all projects
+  private projects: any[] = [];
+
+  // Static property to hold the single instance of ProjectState
+  private static instance: ProjectState;
+
+  // Private constructor prevents direct instantiation
+  private constructor() {}
+
+  /**
+   * getInstance
+   *
+   * Provides access to the single instance of ProjectState.
+   * If an instance already exists, it returns that instance.
+   * Otherwise, it creates a new instance and returns it.
+   */
+  static getInstance() {
+    if (this.instance) {
+      return this.instance;
+    }
+
+    this.instance = new ProjectState();
+    return this.instance;
+  }
+
+  addProject(title: string, description: string, numOfPeople: number) {
+    const newProject = {
+      id: Math.random().toString(),
+      title,
+      description,
+      people: numOfPeople,
+    };
+
+    this.projects.push(newProject);
+  }
+}
+
+// Create or retrieve the single instance of ProjectState
+const projectState = ProjectState.getInstance();
+
+/**
  * Validation
  */
 interface Validatable {
