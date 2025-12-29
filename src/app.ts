@@ -83,6 +83,12 @@ class ProjectInput {
     }
   }
 
+  private clearInputs() {
+    this.titleInputElement.value = '';
+    this.descriptionInputElement.value = '';
+    this.peopleInputElement.value = '';
+  }
+
   @autobind
   private submitHandler(event: Event) {
     event.preventDefault();
@@ -94,6 +100,9 @@ class ProjectInput {
       const [title, description, people] = userInput;
 
       console.log(title, description, people);
+
+      // Reset all form fields to empty strings after successful submission
+      this.clearInputs();
     }
   }
 
