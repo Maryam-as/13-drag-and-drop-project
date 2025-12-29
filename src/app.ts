@@ -26,6 +26,9 @@ class Project {
  * In addition to storing projects, this state also implements a simple
  * observer (listener) mechanism so UI components can react to state changes.
  */
+
+type Listener = (items: Project[]) => void;
+
 class ProjectState {
   /**
    * Listeners (observer functions)
@@ -36,7 +39,7 @@ class ProjectState {
    * Typical listeners are UI components (like ProjectList) that need to
    * re-render when the data changes.
    */
-  private listeners: any[] = [];
+  private listeners: Listener[] = [];
 
   // Array to hold all projects
   private projects: Project[] = [];
@@ -72,7 +75,7 @@ class ProjectState {
    * This allows UI components to "subscribe" to state updates
    * without tightly coupling them to ProjectState's internal logic.
    */
-  addListener(listenerFn: Function) {
+  addListener(listenerFn: Listener) {
     this.listeners.push(listenerFn);
   }
 
@@ -224,7 +227,7 @@ class ProjectList {
     // a reactive, observer-style architecture where:
     // ProjectState = source of truth
     // ProjectList   = subscriber / observer
-    projectState.addListener((projects: any) => {
+    projectState.addListener((projects: Project[]) => {
       this.assignedProjects = projects;
       this.renderProjects();
     });
