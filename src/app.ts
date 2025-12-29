@@ -4,8 +4,22 @@
  * This class is responsible for managing all project data.
  * It follows the Singleton pattern to ensure there is only one instance
  * of ProjectState across the entire application.
+ *
+ * In addition to storing projects, this state also implements a simple
+ * observer (listener) mechanism so UI components can react to state changes.
  */
 class ProjectState {
+  /**
+   * Listeners (observer functions)
+   *
+   * Each listener is a function that will be called whenever the project
+   * state changes (e.g. when a new project is added).
+   *
+   * Typical listeners are UI components (like ProjectList) that need to
+   * re-render when the data changes.
+   */
+  private listeners: any[] = [];
+
   // Array to hold all projects
   private projects: any[] = [];
 
@@ -31,6 +45,19 @@ class ProjectState {
     return this.instance;
   }
 
+  /**
+   * addListener
+   *
+   * Registers a listener function that will be notified whenever
+   * the project state changes.
+   *
+   * This allows UI components to "subscribe" to state updates
+   * without tightly coupling them to ProjectState's internal logic.
+   */
+  addListener(listenerFn: Function) {
+    this.listeners.push(listenerFn);
+  }
+
   addProject(title: string, description: string, numOfPeople: number) {
     const newProject = {
       id: Math.random().toString(),
@@ -39,7 +66,28 @@ class ProjectState {
       people: numOfPeople,
     };
 
+    // Add the newly created project to the internal state array
     this.projects.push(newProject);
+
+    // Notify all registered listeners about the state change.
+    for (const listenerFn of this.listeners) {
+      /**
+       * We pass a COPY of the projects array using slice().
+       *
+       * Why slice()?
+       * - slice() creates a shallow copy of the array
+       * - This prevents external code from directly mutating the internal
+       *   `projects` array stored inside ProjectState
+       *
+       * Without slice(), a listener could accidentally modify the original
+       * state (e.g. push, pop, or reorder projects), which would break
+       * predictable state management and lead to hard-to-track bugs.
+       *
+       * This enforces a one-way data flow:
+       * ProjectState (source of truth) → UI listeners (read-only data)
+       */
+      listenerFn(this.projects.slice());
+    }
   }
 }
 
