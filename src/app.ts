@@ -18,6 +18,9 @@ class ProjectInput {
     // Extract the first element from the imported template (the form)
     this.element = importedNode.firstElementChild as HTMLFormElement;
 
+    // Assign an ID to the form for CSS styling
+    this.element.id = 'user-input';
+
     // Attach the form to the host element
     this.attach();
   }
