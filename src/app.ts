@@ -255,7 +255,10 @@ class ProjectInput {
     if (Array.isArray(userInput)) {
       const [title, description, people] = userInput;
 
-      console.log(title, description, people);
+      // Add the new project to the centralized ProjectState.
+      // This delegates data management to the singleton state class,
+      // keeping the UI (ProjectInput) decoupled from how projects are stored.
+      projectState.addProject(title, description, people);
 
       // Reset all form fields to empty strings after successful submission
       this.clearInputs();
