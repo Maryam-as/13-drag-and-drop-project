@@ -88,6 +88,13 @@ class ProjectInput {
     event.preventDefault();
 
     const userInput = this.gatherUserInput();
+
+    // Type guard: ensures userInput is the expected tuple before destructuring
+    if (Array.isArray(userInput)) {
+      const [title, description, people] = userInput;
+
+      console.log(title, description, people);
+    }
   }
 
   private configure() {
