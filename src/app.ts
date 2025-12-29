@@ -178,6 +178,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
+  assignedProjects: any[];
 
   constructor(private type: 'active' | 'finished') {
     this.templateElement = document.getElementById(
@@ -191,6 +192,22 @@ class ProjectList {
     );
     this.element = importedNode.firstElementChild as HTMLElement;
     this.element.id = `${this.type}-projects`;
+
+    // Register this ProjectList instance as a listener to ProjectState.
+    //
+    // By subscribing in the constructor, we ensure that as soon as a ProjectList
+    // is created, it starts reacting to project state changes.
+    // Whenever ProjectState updates (e.g. a new project is added),
+    // the listener callback is executed and provides the latest projects data.
+    //
+    // This keeps ProjectList in sync with the central state and follows
+    // a reactive, observer-style architecture where:
+    // ProjectState = source of truth
+    // ProjectList   = subscriber / observer
+    projectState.addListener((projects: any) => {
+      this.assignedProjects = projects;
+    });
+
     this.attach();
     this.renderContent();
   }
