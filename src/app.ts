@@ -248,6 +248,9 @@ class ProjectList {
       `${this.type}-projects-list`
     )! as HTMLUListElement;
 
+    // Clear the existing list content before rendering to prevent duplicates
+    listEl.innerHTML = '';
+
     for (const prjItem of this.assignedProjects) {
       const listItem = document.createElement('li');
       listItem.textContent = prjItem.title;
