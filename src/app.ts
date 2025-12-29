@@ -2,6 +2,9 @@ class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLFormElement;
+  titleInputElement: HTMLInputElement;
+  descriptionInputElement: HTMLInputElement;
+  peopleInputElement: HTMLInputElement;
 
   constructor() {
     this.templateElement = document.getElementById(
@@ -21,8 +24,34 @@ class ProjectInput {
     // Assign an ID to the form for CSS styling
     this.element.id = 'user-input';
 
+    this.titleInputElement = this.element.querySelector(
+      '#title'
+    ) as HTMLInputElement;
+    this.descriptionInputElement = this.element.querySelector(
+      '#description'
+    ) as HTMLInputElement;
+    this.peopleInputElement = this.element.querySelector(
+      '#people'
+    ) as HTMLInputElement;
+
+    this.configure();
+
     // Attach the form to the host element
     this.attach();
+  }
+
+  private submitHandler(event: Event) {
+    event.preventDefault();
+
+    const title = this.titleInputElement.value;
+    const description = this.descriptionInputElement.value;
+    const people = this.peopleInputElement.value;
+
+    console.log(title, description, people);
+  }
+
+  private configure() {
+    this.element.addEventListener('submit', this.submitHandler.bind(this));
   }
 
   // Inserts the form into the DOM at the beginning of the host element
