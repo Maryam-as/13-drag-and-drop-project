@@ -1,4 +1,22 @@
 /**
+ * Project Type
+ */
+enum ProjectStatus {
+  Active,
+  Finished,
+}
+
+class Project {
+  constructor(
+    public id: string,
+    public title: string,
+    public description: string,
+    public people: number,
+    public status: ProjectStatus
+  ) {}
+}
+
+/**
  * Project State Management
  *
  * This class is responsible for managing all project data.
@@ -21,7 +39,7 @@ class ProjectState {
   private listeners: any[] = [];
 
   // Array to hold all projects
-  private projects: any[] = [];
+  private projects: Project[] = [];
 
   // Static property to hold the single instance of ProjectState
   private static instance: ProjectState;
@@ -59,12 +77,13 @@ class ProjectState {
   }
 
   addProject(title: string, description: string, numOfPeople: number) {
-    const newProject = {
-      id: Math.random().toString(),
+    const newProject = new Project(
+      Math.random().toString(),
       title,
       description,
-      people: numOfPeople,
-    };
+      numOfPeople,
+      ProjectStatus.Active
+    );
 
     // Add the newly created project to the internal state array
     this.projects.push(newProject);
@@ -178,7 +197,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
-  assignedProjects: any[];
+  assignedProjects: Project[];
 
   constructor(private type: 'active' | 'finished') {
     this.templateElement = document.getElementById(
