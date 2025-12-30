@@ -150,6 +150,22 @@ class ProjectState extends State<Project> {
     this.projects.push(newProject);
 
     // Notify all registered listeners about the state change.
+    this.updateListeners();
+  }
+
+  moveProject(projectId: string, newStatus: ProjectStatus) {
+    const project = this.projects.find(prj => prj.id === projectId);
+
+    if (project) {
+      project.status = newStatus;
+
+      // Notify all registered listeners about the state change.
+      this.updateListeners();
+    }
+  }
+
+  private updateListeners() {
+    // Notify all registered listeners about the state change.
     for (const listenerFn of this.listeners) {
       /**
        * We pass a COPY of the projects array using slice().
