@@ -1,4 +1,65 @@
 /**
+ * Drag & Drop Interfaces
+ */
+// Implemented by elements that can be dragged.
+// These methods map directly to the browser's drag events.
+interface Draggable {
+  /**
+   * Triggered when the drag operation starts.
+   *
+   * Typical use cases:
+   * - Store the dragged item's ID in `event.dataTransfer`
+   * - Configure allowed drag effects (move, copy, etc.)
+   */
+  dragStartHandler(event: DragEvent): void;
+
+  /**
+   * Triggered when the drag operation ends.
+   *
+   * Useful for:
+   * - Cleaning up visual indicators
+   * - Resetting temporary drag-related state
+   */
+  dragEndHandler(event: DragEvent): void;
+}
+
+// Implemented by elements that can receive dropped items.
+// These methods control how a drop target reacts during
+// the different phases of a drag operation.
+interface DragTarget {
+  /**
+   * Triggered repeatedly while a draggable element is dragged
+   * over a valid drop target.
+   *
+   * Important:
+   * - `event.preventDefault()` must be called here
+   *   to signal that dropping is allowed.
+   * - Often used to add visual feedback (e.g. highlight the target).
+   */
+  dragOverHandler(event: DragTarget): void;
+
+  /**
+   * Triggered when a draggable element is dropped on the target.
+   *
+   * Typical responsibilities:
+   * - Read dragged data from `event.dataTransfer`
+   * - Update application state accordingly
+   *   (e.g. move a project from Active → Finished)
+   */
+  dropHandler(event: DragTarget): void;
+
+  /**
+   * Triggered when the dragged element leaves the drop target
+   * without being dropped.
+   *
+   * Useful for:
+   * - Reverting visual cues added in `dragOverHandler`
+   * - Keeping the UI in a consistent state
+   */
+  dragLeaveHandler(event: DragTarget): void;
+}
+
+/**
  * Project Type
  */
 enum ProjectStatus {
