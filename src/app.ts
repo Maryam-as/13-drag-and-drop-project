@@ -36,7 +36,7 @@ interface DragTarget {
    *   to signal that dropping is allowed.
    * - Often used to add visual feedback (e.g. highlight the target).
    */
-  dragOverHandler(event: DragTarget): void;
+  dragOverHandler(event: DragEvent): void;
 
   /**
    * Triggered when a draggable element is dropped on the target.
@@ -46,7 +46,7 @@ interface DragTarget {
    * - Update application state accordingly
    *   (e.g. move a project from Active → Finished)
    */
-  dropHandler(event: DragTarget): void;
+  dropHandler(event: DragEvent): void;
 
   /**
    * Triggered when the dragged element leaves the drop target
@@ -56,7 +56,7 @@ interface DragTarget {
    * - Reverting visual cues added in `dragOverHandler`
    * - Keeping the UI in a consistent state
    */
-  dragLeaveHandler(event: DragTarget): void;
+  dragLeaveHandler(event: DragEvent): void;
 }
 
 /**
