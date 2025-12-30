@@ -309,31 +309,13 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
 /**
  * ProjectInput class
  */
-class ProjectInput {
-  templateElement: HTMLTemplateElement;
-  hostElement: HTMLDivElement;
-  element: HTMLFormElement;
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   titleInputElement: HTMLInputElement;
   descriptionInputElement: HTMLInputElement;
   peopleInputElement: HTMLInputElement;
 
   constructor() {
-    this.templateElement = document.getElementById(
-      'project-input'
-    )! as HTMLTemplateElement;
-    this.hostElement = document.getElementById('app')! as HTMLDivElement;
-
-    // Import the template content into the document (deep clone)
-    const importedNode = document.importNode(
-      this.templateElement.content,
-      true
-    );
-
-    // Extract the first element from the imported template (the form)
-    this.element = importedNode.firstElementChild as HTMLFormElement;
-
-    // Assign an ID to the form for CSS styling
-    this.element.id = 'user-input';
+    super('project-input', 'app', true, 'user-input');
 
     this.titleInputElement = this.element.querySelector(
       '#title'
@@ -346,10 +328,13 @@ class ProjectInput {
     ) as HTMLInputElement;
 
     this.configure();
-
-    // Attach the form to the host element
-    this.attach();
   }
+
+  configure() {
+    this.element.addEventListener('submit', this.submitHandler);
+  }
+
+  renderContent(): void {}
 
   private gatherUserInput(): [string, string, number] | void {
     const enteredTitle = this.titleInputElement.value;
@@ -410,15 +395,6 @@ class ProjectInput {
       // Reset all form fields to empty strings after successful submission
       this.clearInputs();
     }
-  }
-
-  private configure() {
-    this.element.addEventListener('submit', this.submitHandler);
-  }
-
-  // Inserts the form into the DOM at the beginning of the host element
-  private attach() {
-    this.hostElement.insertAdjacentElement('afterbegin', this.element);
   }
 }
 
