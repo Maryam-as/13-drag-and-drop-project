@@ -327,7 +327,14 @@ class ProjectItem
 
   @autobind
   dragStartHandler(event: DragEvent): void {
-    console.log(event);
+    // Set the dragged data using the DataTransfer API.
+    // Here we store the project's ID so it can be retrieved later
+    // when the drop event occurs on a ProjectList.
+    event.dataTransfer!.setData('text/plain', this.project.id);
+
+    // Specify the allowed drag effect.
+    // 'move' indicates that the dragged element will be moved, not copied.
+    event.dataTransfer!.effectAllowed = 'move';
   }
 
   dragEndHandler(_: DragEvent): void {
