@@ -22,7 +22,7 @@ class Project {
 type Listener<T> = (items: T[]) => void;
 
 class State<T> {
-  private listeners: Listener<T>[] = [];
+  protected listeners: Listener<T>[] = [];
 
   /**
    * addListener
@@ -48,18 +48,7 @@ class State<T> {
  * In addition to storing projects, this state also implements a simple
  * observer (listener) mechanism so UI components can react to state changes.
  */
-class ProjectState {
-  /**
-   * Listeners (observer functions)
-   *
-   * Each listener is a function that will be called whenever the project
-   * state changes (e.g. when a new project is added).
-   *
-   * Typical listeners are UI components (like ProjectList) that need to
-   * re-render when the data changes.
-   */
-  private listeners: Listener[] = [];
-
+class ProjectState extends State<Project> {
   // Array to hold all projects
   private projects: Project[] = [];
 
@@ -67,7 +56,9 @@ class ProjectState {
   private static instance: ProjectState;
 
   // Private constructor prevents direct instantiation
-  private constructor() {}
+  private constructor() {
+    super();
+  }
 
   /**
    * getInstance
@@ -83,19 +74,6 @@ class ProjectState {
 
     this.instance = new ProjectState();
     return this.instance;
-  }
-
-  /**
-   * addListener
-   *
-   * Registers a listener function that will be notified whenever
-   * the project state changes.
-   *
-   * This allows UI components to "subscribe" to state updates
-   * without tightly coupling them to ProjectState's internal logic.
-   */
-  addListener(listenerFn: Listener) {
-    this.listeners.push(listenerFn);
   }
 
   addProject(title: string, description: string, numOfPeople: number) {
