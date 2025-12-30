@@ -354,7 +354,10 @@ class ProjectItem
   }
 
   dragEndHandler(_: DragEvent): void {
-    console.log('DragEvent');
+    // Clean up any remaining drop-target visual indicators.
+    document
+      .querySelectorAll('.droppable')
+      .forEach(el => el.classList.remove('droppable'));
   }
 
   configure(): void {
