@@ -406,7 +406,21 @@ class ProjectList
   @autobind
   dropHandler(event: DragEvent): void {
     const prjId = event.dataTransfer!.getData('text/plain');
-    console.log(prjId);
+
+    // Determine the new status based on the type of this ProjectList.
+    //
+    // `this.type` is provided via the constructor ('active' | 'finished')
+    // and represents the semantic role of the list that received the drop.
+    //
+    // - Dropping on the "active" list moves the project to Active
+    // - Dropping on the "finished" list moves the project to Finished
+    //
+    // This keeps the drop logic generic and reusable: the same handler
+    // works for both lists without hard-coding statuses.
+    projectState.moveProject(
+      prjId,
+      this.type === 'active' ? ProjectStatus.Active : ProjectStatus.Finished
+    );
   }
 
   @autobind
