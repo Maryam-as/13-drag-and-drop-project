@@ -17,6 +17,28 @@ class Project {
 }
 
 /**
+ * State Base Class
+ */
+type Listener<T> = (items: T[]) => void;
+
+class State<T> {
+  private listeners: Listener<T>[] = [];
+
+  /**
+   * addListener
+   *
+   * Registers a listener function that will be notified whenever
+   * the state changes.
+   *
+   * This allows UI components to "subscribe" to state updates
+   * without tightly coupling them to State's internal logic.
+   */
+  addListener(listenerFn: Listener<T>) {
+    this.listeners.push(listenerFn);
+  }
+}
+
+/**
  * Project State Management
  *
  * This class is responsible for managing all project data.
@@ -26,9 +48,6 @@ class Project {
  * In addition to storing projects, this state also implements a simple
  * observer (listener) mechanism so UI components can react to state changes.
  */
-
-type Listener = (items: Project[]) => void;
-
 class ProjectState {
   /**
    * Listeners (observer functions)
