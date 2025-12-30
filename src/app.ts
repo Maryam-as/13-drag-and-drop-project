@@ -372,9 +372,19 @@ class ProjectList
   }
 
   @autobind
-  dragOverHandler(_: DragEvent): void {
-    const listEl = this.element.querySelector('ul')!;
-    listEl.classList.add('droppable');
+  dragOverHandler(event: DragEvent): void {
+    // Check if the dragged data exists and is of type 'text/plain'
+    // This ensures that we only allow drops for items we know how to handle.
+    if (event.dataTransfer && event.dataTransfer.types[0] === 'text/plain') {
+      // MUST call preventDefault() to signal to the browser that dropping
+      // is allowed. Without this, the 'drop' event will never fire.
+      event.preventDefault();
+
+      // Add a CSS class to the <ul> element to give visual feedback
+      // to the user that this is a valid drop target.
+      const listEl = this.element.querySelector('ul')!;
+      listEl.classList.add('droppable');
+    }
   }
 
   @autobind
