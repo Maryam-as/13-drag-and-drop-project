@@ -1,6 +1,7 @@
 // TypeScript-specific reference directive used to include namespace-based types
 // since namespaces cannot be imported using standard ES module syntax
 /// <reference path='drag-drop-interfaces.ts' />
+/// <reference path='project-model.ts'/>
 
 // Renamed the namespace from DDInterfaces to App and wrapped all application
 // code inside the App namespace to solve a TypeScript scoping issue:
@@ -23,24 +24,6 @@
 // - This pattern is especially useful in non-module or legacy TypeScript
 //   projects that use /// <reference path="..."> directives.
 namespace App {
-  /**
-   * Project Type
-   */
-  enum ProjectStatus {
-    Active,
-    Finished,
-  }
-
-  class Project {
-    constructor(
-      public id: string,
-      public title: string,
-      public description: string,
-      public people: number,
-      public status: ProjectStatus
-    ) {}
-  }
-
   /**
    * State Base Class
    */
