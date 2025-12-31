@@ -4,6 +4,7 @@
 /// <reference path='project-model.ts'/>
 /// <reference path='project-state.ts'/>
 /// <reference path='validation.ts'/>
+/// <reference path='autobind-decorator.ts'/>
 
 // Renamed the namespace from DDInterfaces to App and wrapped all application
 // code inside the App namespace to solve a TypeScript scoping issue:
@@ -26,29 +27,6 @@
 // - This pattern is especially useful in non-module or legacy TypeScript
 //   projects that use /// <reference path="..."> directives.
 namespace App {
-  /**
-   * autobind decorator
-   */
-  function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
-    // Store a reference to the original method
-    const originalMethod = descriptor.value;
-
-    const adjustedDescriptor: PropertyDescriptor = {
-      configurable: true,
-      enumerable: false, // Method should not appear during object enumeration
-      // Using a getter ensures the method is bound only when accessed
-      get() {
-        // 'this' refers to the concrete class instance accessing the method
-        // Automatically bind the original method to the current instance
-        const boundFn = originalMethod.bind(this);
-
-        return boundFn;
-      },
-    };
-
-    return adjustedDescriptor;
-  }
-
   /**
    * Component Base Class
    *
