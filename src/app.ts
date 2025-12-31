@@ -4,7 +4,7 @@
 /// <reference path='project-model.ts'/>
 /// <reference path='project-state.ts'/>
 /// <reference path='validation.ts'/>
-/// <reference path='autobind-decorator.ts'/>
+/// <reference path='decorators/autobind.ts'/>
 
 // Renamed the namespace from DDInterfaces to App and wrapped all application
 // code inside the App namespace to solve a TypeScript scoping issue:
