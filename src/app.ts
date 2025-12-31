@@ -3,7 +3,7 @@
 /// <reference path='models/drag-drop.ts'/>
 /// <reference path='models/project.ts'/>
 /// <reference path='project-state.ts'/>
-/// <reference path='validation.ts'/>
+/// <reference path='util/validation.ts'/>
 /// <reference path='decorators/autobind.ts'/>
 
 // Renamed the namespace from DDInterfaces to App and wrapped all application
