@@ -1,6 +1,6 @@
-namespace DDInterfaces {
-  // The `export` keyword makes these interfaces accessible outside the
-  // namespace, allowing them to be imported and used in other files as well.
+// Namespace for drag-and-drop interfaces. `export` allows these interfaces
+// to be used in other files via reference directives or imports.
+namespace App {
   export interface Draggable {
     dragStartHandler(event: DragEvent): void;
     dragEndHandler(event: DragEvent): void;
