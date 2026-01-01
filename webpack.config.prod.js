@@ -27,7 +27,7 @@ module.exports = {
   },
 
   // Disable source maps for production to reduce bundle size
-  devtool: 'none',
+  // devtool: 'none',
 
   // Module configuration — defines how different types of modules (files) should be handled
   module: {
