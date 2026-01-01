@@ -17,7 +17,7 @@ module.exports = {
   // 'inline-source-map' embeds the source map directly into the bundle
   // so that you can see the original TypeScript code in browser dev tools
   // instead of the compiled JavaScript
-  devtools: 'inline-source-map',
+  devtool: 'inline-source-map',
 
   // Module configuration — defines how different types of modules (files) should be handled
   module: {
