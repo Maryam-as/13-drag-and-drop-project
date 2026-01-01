@@ -12,4 +12,25 @@ module.exports = {
     // Absolute path where the bundled files will be emitted
     path: path.resolve(__dirname, 'dist'),
   },
+
+  // Module configuration — defines how different types of modules (files) should be handled
+  module: {
+    rules: [
+      {
+        // Apply this rule to all TypeScript files
+        test: /\.ts$/,
+        // Use ts-loader to transpile TypeScript into JavaScript
+        use: 'ts-loader',
+        // Exclude node_modules folder to speed up compilation and avoid unnecessary processing
+        exclude: /node_modules/,
+      },
+    ],
+  },
+
+  // Resolve configuration — tells Webpack how to find and bundle imported modules
+  resolve: {
+    // Automatically resolve these file extensions when importing modules
+    // For example, import './app' will check './app.ts' and './app.js'
+    extensions: ['.ts', '.js'],
+  },
 };
