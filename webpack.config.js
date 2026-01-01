@@ -1,8 +1,21 @@
 const path = require('path'); // Node.js utility for working with file and directory paths
 
 module.exports = {
+  // Set Webpack mode to 'development' for better debugging and faster builds
+  mode: 'development',
+
   // Entry point of the application — where Webpack starts building the dependency graph
   entry: './src/app.ts',
+
+  // Configuration for Webpack Dev Server
+  devServer: {
+    // Serve static files from the root directory (for index.html, assets, etc.)
+    static: [
+      {
+        directory: path.join(__dirname),
+      },
+    ],
+  },
 
   output: {
     // Name of the generated bundle
@@ -10,6 +23,9 @@ module.exports = {
 
     // Absolute path where the bundled files will be emitted
     path: path.resolve(__dirname, 'dist'),
+
+    // Public URL of the output directory when referenced in a browser
+    publicPath: '/dist/',
   },
 
   // Enables source maps for easier debugging
