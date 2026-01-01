@@ -6,8 +6,7 @@ module.exports = {
 
   output: {
     // Name of the generated bundle
-    // [contenthash] ensures a unique filename when the content changes (cache busting)
-    filename: 'bundle.[contenthash].js',
+    filename: 'bundle.js',
 
     // Absolute path where the bundled files will be emitted
     path: path.resolve(__dirname, 'dist'),
